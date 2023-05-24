@@ -1,0 +1,40 @@
+{% extends './base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+<div class="container-login">
+    <img src="{{ url_for('static', filename='img/fotologin.jpg') }}" alt="Imagen 1">
+    <form>
+        <h1 class="text-center">Iniciar sesión</h1>
+        <div class="form-group">
+            <label for="cuenta">Ingresar usuario:</label>
+            <input name="usuario" type="text" class="form-control" id="cuenta" placeholder="usuario">
+        </div>
+        <div class="form-group">
+            <label for="contrasena">Ingresar contraseña:</label>
+            <input name="contra" type="password" class="form-control" id="contrasena" placeholder="contraseña">
+        </div>
+        <button type="button" id="btnIniciarSesion" class="btn btn-primary">Ingresar</button>
+    </form>
+</div>
+<script>
+    document.getElementById("btnIniciarSesion").addEventListener("click", function(event) {
+        event.preventDefault(); // Evita que el formulario se envíe automáticamente
+
+        // Obtén los valores de usuario y contraseña
+        var usuario = document.getElementById("cuenta").value;
+        var contra = document.getElementById("contrasena").value;
+
+        // Verifica si los campos tienen los valores correctos
+        if (usuario === "admin" && contra === "admin") {
+            // Redirecciona a la página deseada
+            window.location.href = "/inicio";
+        } else {
+            // Realiza alguna acción si los campos no son válidos (p. ej., muestra un mensaje de error)
+            alert("Usuario o contraseña incorrectos");
+        }
+    });
+</script>
+
+{% endblock %}

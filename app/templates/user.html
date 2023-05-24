@@ -1,0 +1,153 @@
+
+{% extends './base.html'%}
+
+{% block title %}Inicio{% endblock %}
+
+{%block body%}
+<!-- modal de formulario para llenar base de datos -->
+<section class="modale" id="modal">
+    <div class="modale_contenedor">
+        <button type="button" id="cerrar-modal" class="btn-close" aria-label="Close"></button>
+        <h2 class="modale_titulo">Agregar elemento</h2>
+       <!-- formulario  modal-->
+       <hr>
+        <form action="/agregar" method="POST">
+            <!-- campo de nombre -->
+            <input class=" campo form-control" type="text" placeholder="Ingrese nombre" name="nombre" required>
+            <!-- campo de pais -->
+            &nbsp;
+            <input class="campo form-control" type="text" placeholder="País actual" name="pais" required>
+            <!-- campo de fecha de grado -->
+            <label class="campo" for="fechagrado">Fecha de grado</label>
+            <input class="campo form-control" type="date" placeholder="Fecha grado dd/mm/aaaa" name="fecha" required>
+            <!-- campo de area de trabajo -->
+            <label class="campo" for="area">Seleccionar area</label>
+            <select name="area" id="area" class="campo form-select" name="area">
+                <option value="Gobierno">Gobierno</option>
+                <option value="Industria">Industria</option>
+                <option value="Ventas">Ventas</option>
+                <option value="Academico">Academico</option>
+                <option value="Investigación">Investigación</option>
+                <option value="Otros">Otros</option>
+            </select>
+            <!-- campo de rango salarial -->
+            <label class="campo" for="salario">Seleccionar salario</label>
+                <select name="salario" id="salario" class="campo form-select" name="salario">
+                <option value="Menos de 1SMMLV">Menos de 1SMMLV</option>
+                <option value="1SMMLV a 3SMMLV">1SMMLV a 3SMMLV</option>
+                <option value="3SMMLV a 6SMMLV">3SMMLV a 6SMMLV</option>
+                <option value="más de 6SMMLV">más de 6SMMLV</option>
+            </select>
+
+            <!-- boton para enviar info -->
+            <button type="submit" class="btn btn-success guardar">Guardar</button>
+        </form>
+    </div>
+ </section> 
+
+           
+<!-- modal de formulario para actualizar (editar) base de datos -->
+<section class="modale" id="modal2">
+                <div class="modale_contenedor">
+                    <button type="button"   id="cerrar-modal2"class="btn-close" aria-label="Close"></button>
+                    <h2 class="modale_titulo">Actualizar elemento</h2>
+                    <hr>
+                    <!-- formulario  modal-->
+                    <form action="{% if elemento %}{{ url_for('actualizar', id=elemento.id) }}{% else %}{{ url_for('actualizar', id=0) }}{% endif %}" method="POST">
+                        <!-- campo de nombre -->
+                        <input class="campo  form-control" type="text" name="nombre2" value="{{elemento.nombre}}" required>
+                        &nbsp;
+                        <!-- campo de pais -->
+                        <input class="campo  form-control" type="text" name="pais2" value="{{elemento.pais}}" required>
+                        <!-- campo de fecha de grado -->
+                        &nbsp;
+                        <input class="campo  form-control" type="text" name="fecha2" value="{{elemento.fecha}}" required>
+                        <!-- campo de area de trabajo -->
+                        &nbsp;
+                        <input class="campo  form-control" type="text" name="area2" value="{{elemento.area}}" required>
+                        <!-- campo de rango salarial -->
+                        &nbsp;
+                        <input class="campo  form-control" type="text" name="salario2" value="{{elemento.salario}}" required>
+                        <!-- boton para enviar info -->
+                        
+                        <button type="submit" class="btn btn-primary guardar">Actualizar</button>
+                    </form>
+                    
+                 </div>
+ </section> 
+
+<!-- Nombre de la base de datos, nombre del usuario y btn de cierre del aplicativo -->
+<nav>
+    <h2>Base de datos egresados</h2>
+  <ul>
+    <li><p><i class="bi bi-person-fill"></i>LESLY PATRICIA TEJADA BENITEZ</p></li>
+    <li><form action="/cerrar">
+        <button type="submit" class="btn-close" aria-label="Close"></button>
+    </form></li>
+  </ul>
+</nav>
+
+<!-- nav de opciones  -->
+<div class="nav-opciones">
+    <button type="button" class="btn btn-success" id="agregar"><i class="bi bi-database-add"></i> Agregar elemento</button>
+    <button href="'/dato'" type="button" class="btn btn-danger" id="btnExportar"><i class="bi bi-cloud-arrow-down"></i> Descargar excel</button>
+    <button type="button" class="btn btn-primary" id="editar"><i class="bi bi-pencil"></i> Editar elemento</button> 
+    <div>
+        <input type="text" class="form-control"id="inputBusqueda" placeholder="Buscar">
+    </div>
+   
+</div>
+
+ <!-- tabla  general donde se visualiza la base de datos y sus opciones para cada elemento-->
+<div class="container-tabla">
+        <table id="tabla" class="table table-striped">
+           <!-- cabecera tabla - nombre de cada columna -->
+            <thead >
+                <tr>
+                    <th>Seleccionar</th>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>País</th>
+                    <th>Fecha grado</th>
+                    <th>Area</th>
+                    <th>Salarios</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <!-- cuerpo tabla - todos los elementos de la tabla -->
+            <tbody>
+            <!--  variable para llevar control de todos los elementos de la tabla -->
+            {% set contador = namespace(value=0) %}
+            <!--  ciclo para sacar todos los elementos de la tabla -->
+            {%for  row  in tabla%}
+            <!-- aumento del contador  -->
+            {% set contador.value = contador.value + 1 %}
+            <tr>
+                <!-- información de los elementos que se optine del formulario modal1  -->
+                <td>
+                    <form method="GET" action="{{url_for('editar', id=row.id)}}">
+                        <button type="submit" class="btn btn-primary editar"><i class="bi bi-check2"></i></button>
+                     </form>
+                </td>
+                <td scope="row">{{contador.value}}</td>
+                <td>{{row.nombre}}</td>
+                <td>{{row.pais}}</td>
+                <td>{{row.fecha}}</td>
+                <td>{{row.area}}</td>
+                <td>{{row.salario}}</td>
+                <td>
+                <!-- las acciones que tiene cada elemento editar y eliminar -->              
+                <form method="POST" action="{{ url_for('eliminar', id=row.id) }}">
+                            <button type="submit" class="btn btn-danger"> <i class="bi bi-trash"></i> Eliminar</button>
+                </form>                    
+                </td>
+                
+            </tr>
+           
+            {%endfor%}
+            <!-- variables -->
+            </tbody>
+        </table>
+</div>
+<script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+{%endblock%}

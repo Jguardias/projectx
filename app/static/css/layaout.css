@@ -1,0 +1,124 @@
+/* @font-face {
+    font-family: 'lato';
+    src: url(../fonts/Lato-Bold.ttf);
+}
+body {
+    font-family: 'lato';
+} */
+
+nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 2%;
+
+}
+nav ul {
+    display: flex;
+
+}
+nav ul li {
+    position: relative;
+    top:15px;
+    list-style: none;
+    margin-left: 10px;
+    
+}
+.nav-opciones input{
+    width: 400px;
+}
+
+.nav-opciones{
+    display: flex;
+    align-items: center;
+    justify-content:flex-start;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 2%;
+}
+.nav-opciones button {
+    margin-right: 10px;
+}
+
+.container-tabla{
+    padding: 10px;
+    text-align: center;
+}
+
+.modale{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right:0;
+    bottom:0;
+    background-color: #111111bd;
+    display: flex;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .6s;
+
+
+}
+.modale--show{
+    opacity: 1;
+    pointer-events: unset;
+    transition: opacity .6s;
+
+}
+
+.modale_contenedor{
+    position: relative;
+    margin: auto;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80%;
+    background-color: white;
+    border-radius: 6px;
+    padding: 3em 2.5em;
+    display: grid;
+    gap:9px;
+    
+    grid-auto-columns: 100%;
+}
+
+.campo {
+    width: 100%;
+}
+#cerrar-modal{
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}
+
+#cerrar-modal2{
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}
+
+.guardar{
+    position: relative;
+    top: 10px;
+    width: 100%;
+}
+
+.container-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: white; 
+}
+
+.container-login  img{
+    width: 400px;
+    margin-right: 20px;
+}
+
+.container-login button{
+    width: 100%;
+    position: relative;
+    top: 20px;
+}
